@@ -1,3 +1,23 @@
+# libraries
+library(dplyr)
+
+# Download the dataset
+filename <- "getdata_projectfiles_UCI HAR Dataset.zip"
+
+# Checking if folder exists
+if (!file.exists("getdata_projectfiles_UCI HAR Dataset")) { 
+  unzip(filename) 
+}
+
+# Assigning all data frames
+activities <- read.table("UCI HAR Dataset/activity_labels.txt", col.names = c("code", "activity"))
+features <- read.table("UCI HAR Dataset/features.txt", col.names = c("n","functions"))
+subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = "subject")
+xtest <- read.table("UCI HAR Dataset/test/X_test.txt", col.names = features$functions)
+ytest <- read.table("UCI HAR Dataset/test/y_test.txt", col.names = "code")
+subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names = "subject")
+x_train <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = features$functions)
+y_train <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = "code")
 # Step 1: Merges the training and the test sets to create one data set.
 x <- rbind(x_train, x_test)
 y <- rbind(y_train, y_test)
@@ -28,3 +48,7 @@ FinalData <- data %>%
   summarise_all(mean)
 write.table(FinalData, "FinalData.txt", row.name=FALSE)
 
+# Final Data Check
+str(FinalData)
+
+FinalData
